@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Smart Classroom</string>
+    <string name="e59">E59</string>
+    <string name="e62">E62</string>
+    <string name="e63">E63</string>
+    <string name="light">Light</string>
+    <string name="_35">35%</string>
+    <string name="hello_user">Hello User</string>
+    <string name="_80">80%</string>
+    <string name="_20_c">20°C</string>
+    <string name="_10">10%</string>
+    <string name="_19_c">19°C</string>
+</resources>
