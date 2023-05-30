@@ -14,4 +14,6 @@
     <string name="temerature">Temerature</string>
     <string name="_90">90%</string>
     <string name="humidity">Humidity</string>
+    <string name="rollos">Rollos</string>
+    <string name="heating">Heating</string>
 </resources>
