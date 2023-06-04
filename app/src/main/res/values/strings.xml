@@ -11,9 +11,11 @@
     <string name="_10">10%</string>
     <string name="_19_c">19°C</string>
     <string name="_21_c">21°C</string>
-    <string name="temerature">Temerature</string>
+    <string name="temperature">Temperature</string>
     <string name="_90">90%</string>
     <string name="humidity">Humidity</string>
     <string name="rollos">Rollos</string>
     <string name="heating">Heating</string>
+    <string name="created_with_love_3">created with love :3</string>
+    <string name="todo">TODO</string>
 </resources>

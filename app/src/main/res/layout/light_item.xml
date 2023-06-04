@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/materialTextView6"
+                android:id="@+id/light_MaterialTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -32,11 +32,11 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/materialTextView9"
-                app:layout_constraintStart_toStartOf="@+id/materialTextView9" />
+                app:layout_constraintEnd_toEndOf="@+id/lightPercentage_MaterialTextView"
+                app:layout_constraintStart_toStartOf="@+id/lightPercentage_MaterialTextView" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/materialTextView9"
+                android:id="@+id/lightPercentage_MaterialTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -44,11 +44,11 @@
                 android:text="@string/_35"
                 android:textColor="@color/white"
                 android:textSize="42sp"
-                app:layout_constraintBottom_toTopOf="@+id/materialTextView6"
+                app:layout_constraintBottom_toTopOf="@+id/light_MaterialTextView"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageView"
+                android:id="@+id/light_ImageView"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"

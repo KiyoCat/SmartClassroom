@@ -1,13 +1,10 @@
 package de.haw_hamburg.smartclassroom;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,17 +17,18 @@ public class MainActivity extends AppCompatActivity {
     private static final String BROKER_URL = "tcp://broker.hivemq.com:1883";
     private static final String CLIENT_ID = "my-mqtt-client-id";
     private MqttHandler mqttHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setAdapter(new CustomAdapter());
+        //RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        //recyclerView.setAdapter(new CustomAdapter());
 
         mqttHandler = new MqttHandler();
         mqttHandler.connect(BROKER_URL, CLIENT_ID);
 
-        button = (Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.roomActivity_Button);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        imageView = (ImageView) findViewById(R.id.imageView3);
+        imageView = (ImageView) findViewById(R.id.newRoom_ImageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     public void openRoomActivity(){
         Intent intent = new Intent(this, RoomActivity.class);
         startActivity(intent);
