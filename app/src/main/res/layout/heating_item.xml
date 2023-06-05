@@ -31,7 +31,7 @@
                 android:id="@+id/TextView_Heating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="72dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="@string/heating"
@@ -42,14 +42,14 @@
 
             <SeekBar
                 android:id="@+id/seekBar"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="92dp"
+                android:layout_marginEnd="24dp"
                 android:max="5"
+                android:progress="1"
                 app:layout_constraintBottom_toBottomOf="@+id/TextView_Heating"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/TextView_Heating" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
