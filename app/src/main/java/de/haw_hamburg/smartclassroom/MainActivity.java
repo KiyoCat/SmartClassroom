@@ -11,9 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MqttMessageCallback{
 
     Button button;
     ImageView imageView;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(new CustomAdapter());
 
         mqttHandler = new MqttHandler();
+        mqttHandler.setMessageCallback(this);
         mqttHandler.connect(BROKER_URL, CLIENT_ID);
 
         button = (Button) findViewById(R.id.button);
@@ -54,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
     public void openNewRoomActivity(){
         Intent intent = new Intent(this, NewRoomActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onMessageReceived(String topic, String message){
+        // handle received message here (UI elements, process data, etc)
+        runOnUiThread(() ->{
+            TextView textView = findViewById(R.id.textView);
+            textView.setText("Topic: " + topic + "\nMessage: " + message);
+        });
     }
     public void publishMessage(String topic, String message){
         Toast.makeText(this, "Publishing message: " + message,Toast.LENGTH_SHORT).show();

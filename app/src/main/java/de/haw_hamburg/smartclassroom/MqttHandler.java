@@ -6,9 +6,20 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-public class MqttHandler {
+public class MqttHandler implements MqttMessageCallback{
 
     private MqttClient client;
+    private MqttMessageCallback messageCallback;
+
+    public void setMessageCallback(MqttMessageCallback callback){
+        this.messageCallback = callback;
+    }
+
+    public void messageArrived(String topic, MqttMessage message) throws Exception{
+        if (messageCallback != null){
+            messageCallback.onMessageReceived(topic, message.toString());
+        }
+    }
 
     public void connect(String brokerUrl, String clientId) {
         try {
@@ -52,5 +63,10 @@ public class MqttHandler {
         } catch (MqttException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onMessageReceived(String topic, String message) {
+
     }
 }
