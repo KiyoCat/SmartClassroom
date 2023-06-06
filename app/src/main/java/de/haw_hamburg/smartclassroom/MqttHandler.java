@@ -53,4 +53,8 @@ public class MqttHandler {
             e.printStackTrace();
         }
     }
+
+    public MqttClient getClient(){
+        return this.client;
+    }
 }
