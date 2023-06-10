@@ -1,4 +1,4 @@
-package de.haw_hamburg.smartclassroom;
+package de.haw_hamburg.smartclassroom.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import de.haw_hamburg.smartclassroom.R;
 
 public class RoomActivity extends AppCompatActivity {
     ImageView imageView;

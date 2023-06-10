@@ -1,4 +1,4 @@
-package de.haw_hamburg.smartclassroom;
+package de.haw_hamburg.smartclassroom.Model;
 
 public class SmartClassroom {
 

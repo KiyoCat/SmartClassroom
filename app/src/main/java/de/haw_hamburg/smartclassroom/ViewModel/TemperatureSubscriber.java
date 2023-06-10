@@ -1,13 +1,13 @@
-package de.haw_hamburg.smartclassroom;
+package de.haw_hamburg.smartclassroom.ViewModel;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.internal.wire.MqttConnect;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.haw_hamburg.smartclassroom.Model.TemperatureObserver;
 
 public class TemperatureSubscriber implements MqttCallback {
 
