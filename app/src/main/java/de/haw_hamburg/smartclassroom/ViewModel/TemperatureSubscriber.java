@@ -25,7 +25,15 @@ public class TemperatureSubscriber implements MqttCallback {
     }
 
     public void subscribe(String channel){
-
+        //hier steht basically dasselbe, was im MQTT Handler ist
+//        try {
+//            this.channelOfSensor = channel;
+//            mqttConnection.getClient().subscribe(channel, 0);
+//            observers.clear();
+//        } catch (MqttException e) {
+//            // Handle the exception
+//            e.printStackTrace(); // or log the exception details
+//        }
     }
 
     @Override
