@@ -9,12 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import de.haw_hamburg.smartclassroom.MqttMessageCallback;
-import de.haw_hamburg.smartclassroom.MyApplication;
+import de.haw_hamburg.smartclassroom.ViewModel.MqttMessageCallback;
+import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
 import de.haw_hamburg.smartclassroom.ViewModel.MqttHandler;
 import de.haw_hamburg.smartclassroom.R;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity implements MqttMessageCallback {
 
