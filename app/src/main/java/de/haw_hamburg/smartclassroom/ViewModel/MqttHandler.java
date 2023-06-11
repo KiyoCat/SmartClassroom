@@ -6,23 +6,35 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-public class MqttHandler {
+public class MqttHandler implements MqttMessageCallback{
 
     private MqttClient client;
+    private MqttMessageCallback messageCallback;
 
-    public void connect(String brokerUrl, String clientId) {
+    public void setMessageCallback(MqttMessageCallback callback){
+        this.messageCallback = callback;
+    }
+
+    public void messageArrived(String topic, MqttMessage message) throws Exception{
+        if (messageCallback != null){
+            messageCallback.onMessageReceived(topic, message.toString());
+        }
+    }
+
+    public void connect() {
         try {
-            // Set up the persistence layer
+            String brokerUrl = "tcp://diginet.mt.haw-hamburg.de:1883";
+            String clientId = MqttClient.generateClientId();
+            String username = "dignet";
+            String password = "digiNetE63";
             MemoryPersistence persistence = new MemoryPersistence();
-
-            // Initialize the MQTT client
             client = new MqttClient(brokerUrl, clientId, persistence);
 
-            // Set up the connection options
             MqttConnectOptions connectOptions = new MqttConnectOptions();
             connectOptions.setCleanSession(true);
+            connectOptions.setUserName(username);
+            connectOptions.setPassword(password.toCharArray());
 
-            // Connect to the broker
             client.connect(connectOptions);
         } catch (MqttException e) {
             e.printStackTrace();
@@ -53,8 +65,13 @@ public class MqttHandler {
             e.printStackTrace();
         }
     }
-
+    
     public MqttClient getClient(){
         return this.client;
+    }
+
+    @Override
+    public void onMessageReceived(String topic, String message) {
+
     }
 }
