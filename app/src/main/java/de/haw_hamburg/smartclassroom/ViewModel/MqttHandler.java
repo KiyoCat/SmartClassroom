@@ -1,4 +1,4 @@
-package de.haw_hamburg.smartclassroom;
+package de.haw_hamburg.smartclassroom.ViewModel;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -52,5 +52,9 @@ public class MqttHandler {
         } catch (MqttException e) {
             e.printStackTrace();
         }
+    }
+
+    public MqttClient getClient(){
+        return this.client;
     }
 }

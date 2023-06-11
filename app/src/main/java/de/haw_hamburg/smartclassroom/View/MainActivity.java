@@ -1,14 +1,16 @@
-package de.haw_hamburg.smartclassroom;
+package de.haw_hamburg.smartclassroom.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import de.haw_hamburg.smartclassroom.ViewModel.MqttHandler;
+import de.haw_hamburg.smartclassroom.R;
 
 public class MainActivity extends AppCompatActivity {
 

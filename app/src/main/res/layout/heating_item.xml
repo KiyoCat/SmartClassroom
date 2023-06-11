@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/TextView_Heating"
+                android:id="@+id/TextView_Rollos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
@@ -47,11 +47,9 @@
                 android:layout_marginEnd="24dp"
                 android:max="5"
                 android:progress="1"
-                app:layout_constraintBottom_toBottomOf="@+id/TextView_Heating"
+                app:layout_constraintBottom_toBottomOf="@+id/TextView_Rollos"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/TextView_Heating" />
-
-
+                app:layout_constraintTop_toTopOf="@+id/TextView_Rollos" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

@@ -1,4 +1,4 @@
-package de.haw_hamburg.smartclassroom;
+package de.haw_hamburg.smartclassroom.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,13 +7,16 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RoomActivity extends AppCompatActivity {
+import de.haw_hamburg.smartclassroom.R;
+import de.haw_hamburg.smartclassroom.View.MainActivity;
+
+public class NewRoomActivity extends AppCompatActivity {
     ImageView imageView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.room_activity);
+        setContentView(R.layout.newroom_activity);
 
         imageView = (ImageView) findViewById(R.id.imageView9);
         imageView.setOnClickListener(new View.OnClickListener() {

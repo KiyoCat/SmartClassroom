@@ -27,7 +27,7 @@
             android:backgroundTint="@color/lightPurple">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/TextView_Heating"
+                android:id="@+id/TextView_Rollos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
@@ -39,15 +39,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="64dp"
                 android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/TextView_Heating"
+                app:layout_constraintBottom_toBottomOf="@+id/TextView_Rollos"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/TextView_Heating"
+                app:layout_constraintTop_toTopOf="@+id/TextView_Rollos"
                 app:layout_constraintVertical_bias="0.517" />
 
 
