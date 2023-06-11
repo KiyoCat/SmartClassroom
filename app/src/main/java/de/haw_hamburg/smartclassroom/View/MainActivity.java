@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
     public void onMessageReceived(String topic, String message){
         // handle received message here (UI elements, process data, etc)
         runOnUiThread(() ->{
-            TextView textView = findViewById(R.id.textView);
+            TextView textView = findViewById(R.id.hello_TextView);
             textView.setText("Topic: " + topic + "\nMessage: " + message);
         });
     }

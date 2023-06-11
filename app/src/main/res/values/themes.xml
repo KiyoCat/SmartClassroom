@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.SmartClassroom" parent="Base.Theme.SmartClassroom" />
+    
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/darkBlue</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/transparent_image</item>
+    </style>
 </resources>
