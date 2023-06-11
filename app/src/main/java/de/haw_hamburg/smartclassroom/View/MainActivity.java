@@ -8,14 +8,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import de.haw_hamburg.smartclassroom.MqttMessageCallback;
+import de.haw_hamburg.smartclassroom.MyApplication;
 import de.haw_hamburg.smartclassroom.ViewModel.MqttHandler;
 import de.haw_hamburg.smartclassroom.R;
-
-public class MainActivity extends AppCompatActivity {
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity implements MqttMessageCallback{
+public class MainActivity extends AppCompatActivity implements MqttMessageCallback {
 
     Button button;
     ImageView imageView;

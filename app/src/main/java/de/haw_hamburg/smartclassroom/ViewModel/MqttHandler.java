@@ -65,7 +65,7 @@ public class MqttHandler implements MqttMessageCallback{
             e.printStackTrace();
         }
     }
-    
+
     public MqttClient getClient(){
         return this.client;
     }
