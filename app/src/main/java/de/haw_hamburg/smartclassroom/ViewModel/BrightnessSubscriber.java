@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.haw_hamburg.smartclassroom.Model.BrightnessObserver;
+import de.haw_hamburg.smartclassroom.Model.MqttHandler;
 
 public class BrightnessSubscriber implements MqttCallback {
 

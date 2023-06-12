@@ -7,6 +7,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.haw_hamburg.smartclassroom.Model.MqttHandler;
 import de.haw_hamburg.smartclassroom.Model.TemperatureObserver;
 
 public class TemperatureSubscriber implements MqttCallback {

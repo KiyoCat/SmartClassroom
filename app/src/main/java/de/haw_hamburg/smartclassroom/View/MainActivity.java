@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import de.haw_hamburg.smartclassroom.ViewModel.MqttMessageCallback;
 import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
-import de.haw_hamburg.smartclassroom.ViewModel.MqttHandler;
+import de.haw_hamburg.smartclassroom.Model.MqttHandler;
 import de.haw_hamburg.smartclassroom.R;
 
 public class MainActivity extends AppCompatActivity implements MqttMessageCallback {

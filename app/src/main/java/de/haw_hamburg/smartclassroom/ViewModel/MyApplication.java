@@ -2,6 +2,8 @@ package de.haw_hamburg.smartclassroom.ViewModel;
 
 import android.app.Application;
 
+import de.haw_hamburg.smartclassroom.Model.MqttHandler;
+
 public class MyApplication extends Application {
 
     private MqttHandler mqttHandler;
