@@ -23,7 +23,7 @@ public class MqttHandler implements MqttMessageCallback{
 
     public void connect() {
         try {
-            String brokerUrl = "tcp://diginet.mt.haw-hamburg.de:1883";
+            String brokerUrl = "tcp://10.0.2.2";
             String clientId = MqttClient.generateClientId();
             String username = "dignet";
             String password = "digiNetE63";
