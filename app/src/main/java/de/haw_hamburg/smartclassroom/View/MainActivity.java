@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
             }
         });
 
+        mqttHandler.subscribe("test");
+        mqttHandler.publish("test", "hallohallo");
+
     }
 
     public void openRoomActivity(){
@@ -68,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
         });
     }
 
-
-
     public void publishMessage(String topic, String message){
         Toast.makeText(this, "Publishing message: " + message,Toast.LENGTH_SHORT).show();
         mqttHandler.publish(topic, message);
@@ -83,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
         mqttHandler.disconnect();
         super.onDestroy();
     }
+
+
 
 
 }
