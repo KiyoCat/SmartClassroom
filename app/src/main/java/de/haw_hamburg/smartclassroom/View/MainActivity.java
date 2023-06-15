@@ -1,18 +1,18 @@
 package de.haw_hamburg.smartclassroom.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import de.haw_hamburg.smartclassroom.ViewModel.MqttMessageCallback;
-import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
+import androidx.appcompat.app.AppCompatActivity;
+
 import de.haw_hamburg.smartclassroom.Model.MqttHandler;
 import de.haw_hamburg.smartclassroom.R;
+import de.haw_hamburg.smartclassroom.ViewModel.MqttMessageCallback;
+import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
 
 public class MainActivity extends AppCompatActivity implements MqttMessageCallback {
 
@@ -48,8 +48,9 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
             }
         });
 
+        // testing, ignore pls
         mqttHandler.subscribe("test");
-        mqttHandler.publish("test", "hallohallo");
+        mqttHandler.publish("test", "hallo test");
 
     }
 
@@ -62,14 +63,13 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
         startActivity(intent);
     }
 
-@Override
-    public void onMessageReceived(String topic, String message){
-        // handle received message here (UI elements, process data, etc)
-        runOnUiThread(() ->{
-            TextView textView = findViewById(R.id.hello_TextView);
-            textView.setText("Topic: " + topic + "\nMessage: " + message);
-        });
+    @Override
+    public String onMessageReceived(String topic, String message) {
+        mqttHandler.onMessageReceived(topic, message);
+        return message;
     }
+
+
 
     public void publishMessage(String topic, String message){
         Toast.makeText(this, "Publishing message: " + message,Toast.LENGTH_SHORT).show();
