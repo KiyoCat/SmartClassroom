@@ -11,10 +11,9 @@
         android:id="@+id/newRoom_ImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/hello_TextView"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+        app:layout_constraintTop_toTopOf="@+id/hello_TextView"
         app:srcCompat="@drawable/icons8_plus_48" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -22,27 +21,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="33dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/hello_user"
         android:textColor="@color/lightPurpleGray"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/newRoom_ImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/newRoom_ImageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         app:cardBackgroundColor="@color/grayBlue"
         app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/materialCardView2"
+        app:layout_constraintBottom_toTopOf="@+id/roomE62_materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newRoom_ImageView">
+        app:layout_constraintTop_toBottomOf="@+id/hello_TextView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -179,7 +179,7 @@
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/lightPurple"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Button"
+                android:text="@string/settings"
                 android:textColor="@color/lightPurpleGray"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/currentRoom_TextView"
@@ -191,7 +191,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView2"
+        android:id="@+id/roomE62_materialCardView"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
@@ -199,7 +199,7 @@
         android:layout_marginBottom="8dp"
         app:cardBackgroundColor="@color/grayBlue"
         app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/materialCardView"
+        app:layout_constraintBottom_toTopOf="@+id/roomE63_materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -273,7 +273,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
+        android:id="@+id/roomE63_materialCardView"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
