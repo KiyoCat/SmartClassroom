@@ -1,5 +1,7 @@
 package de.haw_hamburg.smartclassroom.View;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,15 +10,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import org.eclipse.paho.client.mqttv3.MqttException;
-
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
+import de.haw_hamburg.smartclassroom.Model.SmartClassroom;
 import de.haw_hamburg.smartclassroom.R;
 import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
 
 public class MainActivity extends AppCompatActivity{
 
+    private SmartClassroom smartClassroom;
     Button button;
     ImageView imageView;
 
@@ -82,6 +84,27 @@ public class MainActivity extends AppCompatActivity{
         super.onDestroy();
     }
 
+    public void temperatureNotification() {
+        String temperature = "36";
+        int convertTemperatureToInt = Integer.parseInt(temperature);
+        if (smartClassroom.getTemperature() > 20) {
+            openTemperatureAlertBox();
+        }
+    }
+
+    private void openTemperatureAlertBox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Hold on!");
+        builder.setMessage("Test message");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog tempAlert = builder.create();
+        tempAlert.show();
+    }
 
 
 

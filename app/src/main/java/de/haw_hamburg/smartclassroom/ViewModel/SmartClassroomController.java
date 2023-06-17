@@ -1,11 +1,16 @@
 package de.haw_hamburg.smartclassroom.ViewModel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import de.haw_hamburg.smartclassroom.Model.BrightnessObserver;
 import de.haw_hamburg.smartclassroom.Model.SmartClassroom;
 import de.haw_hamburg.smartclassroom.Model.TemperatureObserver;
+import de.haw_hamburg.smartclassroom.R;
+import de.haw_hamburg.smartclassroom.View.MainActivity;
 
 public class SmartClassroomController implements TemperatureObserver, BrightnessObserver {
 
@@ -57,4 +62,5 @@ public class SmartClassroomController implements TemperatureObserver, Brightness
     public void onTemperatureChanged(double temperature) {
         smartClassroom.setTemperature(temperature);
     }
+
 }
