@@ -9,17 +9,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import de.haw_hamburg.smartclassroom.Model.MqttHandler;
+import org.eclipse.paho.client.mqttv3.MqttException;
+
+import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.R;
-import de.haw_hamburg.smartclassroom.ViewModel.MqttMessageCallback;
 import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
 
-public class MainActivity extends AppCompatActivity implements MqttMessageCallback {
+public class MainActivity extends AppCompatActivity{
 
     Button button;
     ImageView imageView;
 
-    private MqttHandler mqttHandler;
+    private MqttClient mqttClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,12 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
         //recyclerView.setAdapter(new CustomAdapter());
 
         MyApplication myApp = (MyApplication) getApplication();
-        mqttHandler = myApp.getMqttHandler();
-        mqttHandler.connect();
+        mqttClient = myApp.getMqttHandler();
+        try {
+            mqttClient.connect();
+        } catch (MqttException e) {
+            throw new RuntimeException(e);
+        }
 
         button = (Button) findViewById(R.id.roomActivity_Button);
         button.setOnClickListener(new View.OnClickListener(){
@@ -49,8 +54,8 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
         });
 
         // testing, ignore pls
-        mqttHandler.subscribe("test");
-        mqttHandler.publish("test", "hallo test");
+        mqttClient.subscribe("test");
+        mqttClient.publish("test", "hallo test");
 
     }
 
@@ -63,25 +68,17 @@ public class MainActivity extends AppCompatActivity implements MqttMessageCallba
         startActivity(intent);
     }
 
-    @Override
-    public String onMessageReceived(String topic, String message) {
-        mqttHandler.onMessageReceived(topic, message);
-        return message;
-    }
-
-
-
     public void publishMessage(String topic, String message){
         Toast.makeText(this, "Publishing message: " + message,Toast.LENGTH_SHORT).show();
-        mqttHandler.publish(topic, message);
+        mqttClient.publish(topic, message);
     }
     private void subscribeToTopic(String topic){
         Toast.makeText(this, "Subscribing to topic: " + topic, Toast.LENGTH_SHORT).show();
-        mqttHandler.subscribe(topic);
+        mqttClient.subscribe(topic);
     }
     @Override
     protected void onDestroy() {
-        mqttHandler.disconnect();
+        mqttClient.disconnect();
         super.onDestroy();
     }
 

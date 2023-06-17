@@ -7,16 +7,16 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.haw_hamburg.smartclassroom.Model.MqttHandler;
+import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.Model.TemperatureObserver;
 
 public class TemperatureSubscriber implements MqttCallback {
 
-    private MqttHandler mqttConnection;
+    private MqttClient mqttConnection;
     private String channelOfSensor;
     private List<MqttObserver> observers = new ArrayList<>();
 
-    public TemperatureSubscriber(MqttHandler mqttConnection, String channelOfSensor){
+    public TemperatureSubscriber(MqttClient mqttConnection, String channelOfSensor){
         this.mqttConnection = mqttConnection;
         this.channelOfSensor = channelOfSensor;
         mqttConnection.getClient().setCallback(this);

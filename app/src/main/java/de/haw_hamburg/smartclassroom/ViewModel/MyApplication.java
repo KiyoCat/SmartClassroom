@@ -2,19 +2,25 @@ package de.haw_hamburg.smartclassroom.ViewModel;
 
 import android.app.Application;
 
-import de.haw_hamburg.smartclassroom.Model.MqttHandler;
+import org.eclipse.paho.client.mqttv3.MqttException;
+
+import de.haw_hamburg.smartclassroom.Model.MqttClient;
 
 public class MyApplication extends Application {
 
-    private MqttHandler mqttHandler;
+    private MqttClient mqttClient;
 
     @Override
     public void onCreate(){
         super.onCreate();
-        mqttHandler = new MqttHandler();
-        mqttHandler.connect();
+        mqttClient = new MqttClient();
+        try {
+            mqttClient.connect();
+        } catch (MqttException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public MqttHandler getMqttHandler(){
-        return mqttHandler;
+    public MqttClient getMqttHandler(){
+        return mqttClient;
     }
 }

@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.haw_hamburg.smartclassroom.Model.BrightnessObserver;
-import de.haw_hamburg.smartclassroom.Model.MqttHandler;
+import de.haw_hamburg.smartclassroom.Model.MqttClient;
 
 public class BrightnessSubscriber implements MqttCallback {
 
-    private MqttHandler mqttConnection;
+    private MqttClient mqttConnection;
     private String channelOfSensor;
     private List<MqttObserver> observers = new ArrayList<>();
 
