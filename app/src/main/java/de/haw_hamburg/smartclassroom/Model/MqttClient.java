@@ -69,13 +69,26 @@ public class MqttClient implements MqttCallback {
         }
     }
 
+    public String returnMessage (String topic, MqttMessage message)throws Exception {
+        final String receivedMessage = new String(message.getPayload());
+        // Update the UI on the main thread
+        //activity.runOnUiThread(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //         Update the TextView with the received message
+        //        textView.setText(receivedMessage);
+        //    }
+        //});
+        return receivedMessage;
+    }
+
     public org.eclipse.paho.client.mqttv3.MqttClient getClient() {
         return this.client;
     }
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        final String receivedMessage = new String(message.getPayload());
+        //final String receivedMessage = new String(message.getPayload());
 
         // Update the UI on the main thread
         //activity.runOnUiThread(new Runnable() {
