@@ -21,15 +21,12 @@ public class MainActivity extends AppCompatActivity{
     private SmartClassroom smartClassroom;
     Button button;
     ImageView imageView;
-
     private MqttClient mqttClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        //recyclerView.setAdapter(new CustomAdapter());
 
         MyApplication myApp = (MyApplication) getApplication();
         mqttClient = myApp.getMqttHandler();
