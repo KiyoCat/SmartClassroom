@@ -1,4 +1,4 @@
-package de.haw_hamburg.smartclassroom.ViewModel;
+package de.haw_hamburg.smartclassroom.viewmodel;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;

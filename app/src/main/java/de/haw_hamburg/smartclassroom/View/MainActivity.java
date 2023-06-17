@@ -14,7 +14,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.Model.SmartClassroom;
 import de.haw_hamburg.smartclassroom.R;
-import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
+import de.haw_hamburg.smartclassroom.viewmodel.MyApplication;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity{
         });
 
         // testing, ignore pls
-        mqttClient.subscribe("test");
-        mqttClient.publish("test", "hallo test");
+        //mqttClient.subscribe("test");
+        //mqttClient.publish("test", "hallo test");
 
     }
 
