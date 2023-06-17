@@ -3,13 +3,16 @@ package de.haw_hamburg.smartclassroom.Model;
 import android.util.Log;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-public class MqttClient implements MqttCallback {
+import java.nio.charset.StandardCharsets;
+
+public class MqttClient implements MqttCallback, IMqttMessageListener {
     private org.eclipse.paho.client.mqttv3.MqttClient client;
 
     public void connect() throws MqttException {
@@ -50,6 +53,7 @@ public class MqttClient implements MqttCallback {
     }
 
     public void subscribe(String topic) {
+        client.setCallback(this);
         try {
             client.subscribe(topic);
             Log.d("success", "subscribed to topic.");
@@ -68,36 +72,28 @@ public class MqttClient implements MqttCallback {
             Log.d("error", "failed to disconnect.");
         }
     }
+    @Override
+    public void messageArrived(String topic, MqttMessage message) throws Exception {
+        try {
+            byte[] payload = message.getPayload();
+            String convertedMessageContent = new String(payload, StandardCharsets.UTF_8);
+            receiveData(topic, convertedMessageContent);
+            Log.d("succes", "new message: " + convertedMessageContent);
+        } catch (Exception e) {
+            Log.d("error", "couldn't handle message");
+        }
+    };
+    private void receiveData(String topic, String message) {
+        try {
+            Log.d("success", "message received: " + message);
 
-    public String returnMessage (String topic, MqttMessage message)throws Exception {
-        final String receivedMessage = new String(message.getPayload());
-        // Update the UI on the main thread
-        //activity.runOnUiThread(new Runnable() {
-        //    @Override
-        //    public void run() {
-        //         Update the TextView with the received message
-        //        textView.setText(receivedMessage);
-        //    }
-        //});
-        return receivedMessage;
+        } catch (Exception e) {
+            Log.d("error", "couldn't receive Data");
+        }
     }
 
     public org.eclipse.paho.client.mqttv3.MqttClient getClient() {
         return this.client;
-    }
-
-    @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
-        //final String receivedMessage = new String(message.getPayload());
-
-        // Update the UI on the main thread
-        //activity.runOnUiThread(new Runnable() {
-        //    @Override
-        //    public void run() {
-        //         Update the TextView with the received message
-        //        textView.setText(receivedMessage);
-        //    }
-        //});
     }
 
     @Override

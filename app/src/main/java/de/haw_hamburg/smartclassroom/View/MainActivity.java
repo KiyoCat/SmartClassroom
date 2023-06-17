@@ -7,16 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import org.eclipse.paho.client.mqttv3.MqttException;
+
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.Model.SmartClassroom;
 import de.haw_hamburg.smartclassroom.R;
 import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private SmartClassroom smartClassroom;
     Button button;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         button = (Button) findViewById(R.id.roomActivity_Button);
-        button.setOnClickListener(new View.OnClickListener(){
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openRoomActivity();
@@ -58,23 +59,16 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    public void openRoomActivity(){
+    public void openRoomActivity() {
         Intent intent = new Intent(this, RoomActivity.class);
         startActivity(intent);
     }
-    public void openNewRoomActivity(){
+
+    public void openNewRoomActivity() {
         Intent intent = new Intent(this, NewRoomActivity.class);
         startActivity(intent);
     }
 
-    public void publishMessage(String topic, String message){
-        Toast.makeText(this, "Publishing message: " + message,Toast.LENGTH_SHORT).show();
-        mqttClient.publish(topic, message);
-    }
-    private void subscribeToTopic(String topic){
-        Toast.makeText(this, "Subscribing to topic: " + topic, Toast.LENGTH_SHORT).show();
-        mqttClient.subscribe(topic);
-    }
     @Override
     protected void onDestroy() {
         mqttClient.disconnect();
@@ -102,7 +96,5 @@ public class MainActivity extends AppCompatActivity{
         AlertDialog tempAlert = builder.create();
         tempAlert.show();
     }
-
-
 
 }
