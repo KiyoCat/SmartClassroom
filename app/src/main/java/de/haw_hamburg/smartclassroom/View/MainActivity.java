@@ -47,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
         MyApplication myApp = (MyApplication) getApplication();
         temperatureClient = myApp.getMqttHandler();
+        brightnessClient = myApp.getMqttHandler();
         try {
             temperatureClient.connect();
+            brightnessClient.connect();
             temperatureClient.subscribe("temperature");
             brightnessClient.subscribe("brightness");
         } catch (MqttException e) {
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
+   @Override
     protected void onResume() {
         super.onResume();
         temperatureClient.getClient().setCallback(new MqttCallback() {
