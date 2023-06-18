@@ -13,7 +13,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import java.nio.charset.StandardCharsets;
 
 public class MqttClient implements MqttCallback, IMqttMessageListener {
-    private org.eclipse.paho.client.mqttv3.MqttClient client;
+    public org.eclipse.paho.client.mqttv3.MqttClient client;
 
     public void connect() throws MqttException {
         MqttConnectOptions connectOptions = null;
@@ -83,7 +83,7 @@ public class MqttClient implements MqttCallback, IMqttMessageListener {
             Log.d("error", "couldn't handle message");
         }
     };
-    private void receiveData(String topic, String message) {
+    public void receiveData(String topic, String message) {
         try {
             Log.d("success", "message received: " + message);
 
