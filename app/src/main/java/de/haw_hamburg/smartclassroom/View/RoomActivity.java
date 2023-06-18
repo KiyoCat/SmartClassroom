@@ -11,11 +11,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import de.haw_hamburg.smartclassroom.R;
-import de.haw_hamburg.smartclassroom.databinding.RoomActivityBinding;
 import de.haw_hamburg.smartclassroom.viewmodel.SmartClassroomController;
 
 public class RoomActivity extends AppCompatActivity {
-    private RoomActivityBinding binding;
+    //private RoomActivityBinding binding;
     ImageView imageView;
     SeekBar seekBar;
     Switch rollosSwitch;
@@ -26,8 +25,12 @@ public class RoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_activity);
-/*
-        binding = DataBindingUtil.setContentView(this, R.layout.room_activity);
+
+       /* // create ViewModel
+        SmartClassroomController viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
+        // bind View and ViewModel
+        viewModel.sendHeaterValueToServer().observe(this, this::onTemperatureChanged); // oder Lambda
+        /*binding = DataBindingUtil.setContentView(this, R.layout.room_activity);
         viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
         binding.setSmartClassroomController(viewModel);
 
@@ -43,7 +46,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 viewModel.setSeekBarValue(progress);
-               // viewModel.sendHeaterValueToServer(progress);
+                viewModel.sendHeaterValueToServer(progress);
             }
 
             @Override
@@ -70,4 +73,11 @@ public class RoomActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    /*public String sendHeaterValueToServer(int scale){
+        MqttClient client = new MqttClient();
+        String convertedScale = String.valueOf(scale);
+        client.publish("heater", convertedScale);
+        return convertedScale;
+    }*/
 }
