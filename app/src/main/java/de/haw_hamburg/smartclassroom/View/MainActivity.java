@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                if(topic.equals("temperature")) {
+                if (topic.equals("temperature")) {
 
                     String receivedMessage = new String(message.getPayload(), StandardCharsets.UTF_8);
                     runOnUiThread(new Runnable() {
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             temperatureTextViewE63.setText(receivedMessage + "°C");
                         }
                     });
-                }else if(topic.equals("brightness")){
+                } else if (topic.equals("brightness")) {
                     String receivedMessage = new String(message.getPayload(), StandardCharsets.UTF_8);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -133,49 +133,67 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-public void openRoomActivity(){
-        Intent intent=new Intent(this,RoomActivity.class);
+    public void openRoomActivity() {
+        Intent intent = new Intent(this, RoomActivity.class);
         startActivity(intent);
-        }
+    }
 
-public void openNewRoomActivity(){
-        Intent intent=new Intent(this,NewRoomActivity.class);
+    public void openNewRoomActivity() {
+        Intent intent = new Intent(this, NewRoomActivity.class);
         startActivity(intent);
-        }
+    }
 
-@Override
-protected void onPause(){
+    @Override
+    protected void onPause() {
         super.onPause();
         mqttClient.disconnect();
-        }
+    }
 
-@Override
-protected void onDestroy(){
+    @Override
+    protected void onDestroy() {
         mqttClient.disconnect();
         super.onDestroy();
-        }
+    }
 
-public void temperatureNotification(){
-        String temperature="36";
-        int convertTemperatureToInt=Integer.parseInt(temperature);
-        if(smartClassroom.getTemperature()>20){
-        openTemperatureAlertBox();
-        }
-        }
+    public void temperatureNotification() {
+        mqttClient.getClient().setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable cause) {
 
-private void openTemperatureAlertBox(){
-        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                if (topic.equals("temperature")) {
+                    String temperature = new String(message.getPayload(), StandardCharsets.UTF_8);
+                    int convertTemperatureToInt = Integer.parseInt(temperature);
+                    if (smartClassroom.getTemperature() > 20) {
+                        openTemperatureAlertBox();
+                    }
+                }
+
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+
+            }
+        });
+
+    }
+
+    private void openTemperatureAlertBox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Hold on!");
         builder.setMessage("Test message");
-        builder.setPositiveButton("OK",new DialogInterface.OnClickListener(){
-@Override
-public void onClick(DialogInterface dialog,int which){
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-        }
+            }
         });
-        AlertDialog tempAlert=builder.create();
+        AlertDialog tempAlert = builder.create();
         tempAlert.show();
-        }
+    }
 
-        }
+}
