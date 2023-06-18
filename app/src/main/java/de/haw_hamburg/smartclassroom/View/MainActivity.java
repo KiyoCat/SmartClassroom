@@ -1,8 +1,11 @@
 package de.haw_hamburg.smartclassroom.View;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -46,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
         MyApplication myApp = (MyApplication) getApplication();
         mqttClient = myApp.getMqttHandler();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("notif", "Notification", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+            Log.d("test", "first build");
+        }
+
         try {
             mqttClient.connect();
             mqttClient.subscribe("temperature");
@@ -78,12 +93,9 @@ public class MainActivity extends AppCompatActivity {
         brightnessTextViewE62 = (TextView) findViewById(R.id.lightPercentageE62_MaterialTextView);
         brightnessTextViewE63 = (TextView) findViewById(R.id.lightPercentageE63_MaterialTextView);
 
-
         // testing, ignore pls
         mqttClient.subscribe("test");
         mqttClient.publish("test", "hallo test");
-
-
     }
 
     @Override
@@ -97,9 +109,18 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                if (topic.equals("temperature")) {
 
+                if (topic.equals("temperature")) {
                     String receivedMessage = new String(message.getPayload(), StandardCharsets.UTF_8);
+
+                    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                        Log.d("error", "permission for notifications not granted");
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+                    } else {
+                        showNotification(receivedMessage);
+                    }
+
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -132,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     public void openRoomActivity() {
         Intent intent = new Intent(this, RoomActivity.class);
         startActivity(intent);
@@ -155,45 +175,18 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void temperatureNotification() {
-        mqttClient.getClient().setCallback(new MqttCallback() {
-            @Override
-            public void connectionLost(Throwable cause) {
+    private void showNotification(String receivedMessage) {
+        int convertTemperatureToInt = Integer.parseInt(receivedMessage);
+        if (convertTemperatureToInt > 20) {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "notif");
+            builder.setContentTitle("Smart Classroom");
+            builder.setContentText("It's warm outside, turn down the heating!");
+            builder.setSmallIcon(R.drawable.notif_bell);
+            builder.setAutoCancel(true);
 
-            }
-
-            @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
-                if (topic.equals("temperature")) {
-                    String temperature = new String(message.getPayload(), StandardCharsets.UTF_8);
-                    int convertTemperatureToInt = Integer.parseInt(temperature);
-                    if (smartClassroom.getTemperature() > 20) {
-                        openTemperatureAlertBox();
-                    }
-                }
-
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
-
-            }
-        });
-
-    }
-
-    private void openTemperatureAlertBox() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Hold on!");
-        builder.setMessage("Test message");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        AlertDialog tempAlert = builder.create();
-        tempAlert.show();
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+            managerCompat.notify(123, builder.build());
+        }
     }
 
 }
