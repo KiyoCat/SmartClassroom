@@ -78,7 +78,7 @@ public class MqttClient implements MqttCallback, IMqttMessageListener {
             byte[] payload = message.getPayload();
             String convertedMessageContent = new String(payload, StandardCharsets.UTF_8);
             receiveData(topic, convertedMessageContent);
-            Log.d("succes", "new message: " + convertedMessageContent);
+            Log.d("success", "new message: " + convertedMessageContent);
         } catch (Exception e) {
             Log.d("error", "couldn't handle message");
         }
