@@ -1,4 +1,4 @@
-package de.haw_hamburg.smartclassroom.ViewModel;
+package de.haw_hamburg.smartclassroom.viewmodel;
 
 import android.app.Application;
 

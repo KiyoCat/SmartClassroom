@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.Model.SmartClassroom;
 import de.haw_hamburg.smartclassroom.R;
-import de.haw_hamburg.smartclassroom.ViewModel.MyApplication;
+import de.haw_hamburg.smartclassroom.viewmodel.MyApplication;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         // testing, ignore pls
         temperatureClient.subscribe("test");
         temperatureClient.publish("test", "hallo test");
+
 
     }
 

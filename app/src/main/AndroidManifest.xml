@@ -6,7 +6,7 @@
 
 
     <application
-        android:name=".ViewModel.MyApplication"
+        android:name=".viewmodel.MyApplication"
 
 
         android:allowBackup="true"

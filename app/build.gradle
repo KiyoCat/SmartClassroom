@@ -6,6 +6,10 @@ android {
     namespace 'de.haw_hamburg.smartclassroom'
     compileSdk 33
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "de.haw_hamburg.smartclassroom"
         minSdk 21
@@ -37,6 +41,7 @@ dependencies {
     implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
     implementation 'androidx.core:core-splashscreen:1.0.0'
     testImplementation 'junit:junit:4.13.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.x.x'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

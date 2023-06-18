@@ -3,7 +3,7 @@ package de.haw_hamburg.smartclassroom.Model;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import de.haw_hamburg.smartclassroom.ViewModel.MqttObserver;
+import de.haw_hamburg.smartclassroom.viewmodel.MqttObserver;
 
 public interface TemperatureObserver extends MqttObserver {
 
