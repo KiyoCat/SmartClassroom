@@ -37,12 +37,12 @@ public class SmartClassroomController extends ViewModel implements TemperatureOb
     public SmartClassroomController() {
 
     }
-    public SmartClassroomController(SmartClassroom smartClassroom, TemperatureSubscriber temperatureSubscriber, BrightnessSubscriber brightnessSubscriber){
+//    public SmartClassroomController(SmartClassroom smartClassroom, TemperatureSubscriber temperatureSubscriber, BrightnessSubscriber brightnessSubscriber){
 //        this.smartClassroom = smartClassroom;
 //        temperatureSubscriber.addObserver(this);
 //        brightnessSubscriber.addObserver(this);
 
-    }
+   // }
 
     @Override
     public void addObserver(MqttObserver observer) {
@@ -97,12 +97,11 @@ public class SmartClassroomController extends ViewModel implements TemperatureOb
 
         }
 
-
     public void rollosSwitchisClicked(boolean isClicked) {
         if(isClicked == true) {
-            mqttClient.publish("Brightness", "Pull down Rollos");
+            mqttClient.publish("rollo", "Pull down rollos");
         } else {
-            mqttClient.publish("Brightness", "Pull up Rollos");
+            mqttClient.publish("rollo", "Pull up rollos");
         }
     }
 

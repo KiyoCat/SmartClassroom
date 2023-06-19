@@ -183,6 +183,15 @@ public class MainActivity extends AppCompatActivity {
             builder.setContentText("It's warm outside, turn down the heating!");
             builder.setSmallIcon(R.drawable.notif_bell);
             builder.setAutoCancel(true);
+            builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+
+            NotificationChannel channel = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                channel = new NotificationChannel("notif", "Notifications", NotificationManager.IMPORTANCE_HIGH);
+                channel.setDescription("General Notifications");
+                channel.enableLights(true);
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            }
 
             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
             managerCompat.notify(123, builder.build());
