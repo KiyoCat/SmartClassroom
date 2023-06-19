@@ -9,8 +9,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.R;
+import de.haw_hamburg.smartclassroom.viewmodel.MyApplication;
 import de.haw_hamburg.smartclassroom.viewmodel.SmartClassroomController;
 
 public class RoomActivity extends AppCompatActivity {
@@ -26,10 +29,14 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_activity);
 
-       /* // create ViewModel
-        SmartClassroomController viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
+        MyApplication myApp = (MyApplication) getApplication();
+        MqttClient mqttClient = myApp.getMqttHandler();
+        // create ViewModel
+
+         viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
+         viewModel.setMqttClient(mqttClient);
         // bind View and ViewModel
-        viewModel.sendHeaterValueToServer().observe(this, this::onTemperatureChanged); // oder Lambda
+        //viewModel.getSeekBarValue().observe(this, this::send); // oder Lambda
         /*binding = DataBindingUtil.setContentView(this, R.layout.room_activity);
         viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
         binding.setSmartClassroomController(viewModel);
@@ -46,7 +53,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 viewModel.setSeekBarValue(progress);
-                viewModel.sendHeaterValueToServer(progress);
+                //viewModel.sendHeaterValueToServer(progress);
             }
 
             @Override
@@ -67,6 +74,8 @@ public class RoomActivity extends AppCompatActivity {
                 openMainActivity();
             }
         });
+
+
     }
 
     public void openMainActivity(){

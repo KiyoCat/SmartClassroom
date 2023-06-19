@@ -1,5 +1,7 @@
 package de.haw_hamburg.smartclassroom.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,22 +16,31 @@ import de.haw_hamburg.smartclassroom.Model.TemperatureObserver;
 public class SmartClassroomController extends ViewModel implements TemperatureObserver, BrightnessObserver {
 
     private SmartClassroom smartClassroom;
+
+    public void setMqttClient(MqttClient mqttClient) {
+        this.mqttClient = mqttClient;
+    }
+
     private MqttClient mqttClient;
 
     private MutableLiveData<Integer> seekBarValue = new MutableLiveData<>(0);
 
-    public Integer getSeekBarValue() {
-        return this.seekBarValue.getValue();
+    public MutableLiveData<Integer> getSeekBarValue() {
+        return this.seekBarValue;
     }
 
     public void setSeekBarValue(Integer seekBarValue) {
         this.seekBarValue.setValue(seekBarValue);
+        sendHeaterValueToServer(seekBarValue);
     }
 
+    public SmartClassroomController() {
+
+    }
     public SmartClassroomController(SmartClassroom smartClassroom, TemperatureSubscriber temperatureSubscriber, BrightnessSubscriber brightnessSubscriber){
-        this.smartClassroom = smartClassroom;
-        temperatureSubscriber.addObserver(this);
-        brightnessSubscriber.addObserver(this);
+//        this.smartClassroom = smartClassroom;
+//        temperatureSubscriber.addObserver(this);
+//        brightnessSubscriber.addObserver(this);
 
     }
 
@@ -73,28 +84,19 @@ public class SmartClassroomController extends ViewModel implements TemperatureOb
         smartClassroom.setTemperature(temperature);
     }
 
-    public void sendHeaterValueToServer(int heatingValue) {
-        switch(heatingValue) {
-            case 0:
-                mqttClient.publish("Temperature", "Heater on 0");
-                break;
-            case 1:
-                mqttClient.publish("Temperature", "Heater on 1");
-                break;
-            case 2:
-                mqttClient.publish("Temperature", "Heater on 2");
-                break;
-            case 3:
-                mqttClient.publish("Temperature", "Heater on 3");
-                break;
-            case 4:
-                mqttClient.publish("Temperature", "Heater on 4");
-                break;
-            case 5:
-                mqttClient.publish("Temperature", "Heater on 5");
-                break;
+    public String sendHeaterValueToServer(int heatingValue) {
+        String convertedScale = null;
+            try {
+                convertedScale = String.valueOf(heatingValue);
+                mqttClient.publish("heater", convertedScale);
+
+            }catch (Exception e){
+                Log.d("error", "couldn't convert int to String");
+            }
+            return convertedScale;
+
         }
-    }
+
 
     public void rollosSwitchisClicked(boolean isClicked) {
         if(isClicked == true) {
