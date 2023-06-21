@@ -54,6 +54,7 @@ public class RoomActivity extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textView.setText(String.valueOf(progress));
                 viewModel.setSeekBarValue(progress);
             }
 
