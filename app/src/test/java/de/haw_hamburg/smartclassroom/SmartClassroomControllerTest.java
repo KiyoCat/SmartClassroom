@@ -1,8 +1,6 @@
 package de.haw_hamburg.smartclassroom;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -11,27 +9,49 @@ import org.mockito.MockitoAnnotations;
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.viewmodel.SmartClassroomController;
 
-public class SmartClassroomControllerTest {
-    @Mock
-    private MqttClient mockMqttClient;
+import static org.mockito.Mockito.*;
 
-    private SmartClassroomController smartClassroomController;
+public class SmartClassroomControllerTest {
+
+    @Mock
+    private MqttClient mqttClient;
+
+    private SmartClassroomController controller;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        smartClassroomController = new SmartClassroomController();
-        smartClassroomController.setMqttClient(mockMqttClient);
+        controller = new SmartClassroomController();
+        controller.setMqttClient(mqttClient);
     }
 
     @Test
-    public void testSendHeaterValueToServer() {
+    public void testSendHeaterValueToServer() throws MqttException {
         int heatingValue = 25;
-        String expectedConvertedScale = "25";
+        String expectedMessage = "25";
 
-        smartClassroomController.sendHeaterValueToServer(heatingValue);
+        controller.sendHeaterValueToServer(heatingValue);
 
-        verify(mockMqttClient).publish(eq("heater"), eq(expectedConvertedScale));
+        verify(mqttClient, times(1)).publish(eq("heater"), eq(expectedMessage));
     }
 
+    @Test
+    public void testSendSwitchStateToServerTrue() throws MqttException {
+        boolean switchState = true;
+        String expectedMessage = "Pull down";
+
+        controller.sendSwitchStateToServer(switchState);
+
+        verify(mqttClient, times(1)).publish(eq("rollo"), eq(expectedMessage));
+    }
+
+    @Test
+    public void testSendSwitchStateToServerFalse() throws MqttException {
+        boolean switchState = false;
+        String expectedMessage = "Pull up";
+
+        controller.sendSwitchStateToServer(switchState);
+
+        verify(mqttClient, times(1)).publish(eq("rollo"), eq(expectedMessage));
+    }
 }

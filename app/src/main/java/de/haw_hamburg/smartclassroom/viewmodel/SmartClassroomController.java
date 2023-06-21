@@ -39,6 +39,10 @@ public class SmartClassroomController extends ViewModel implements TemperatureOb
     public SmartClassroomController() {
     }
 
+    public SmartClassroomController(SmartClassroom smartClassroom, MqttClient mqttclient) {
+
+    }
+
     @Override
     public void addObserver(MqttObserver observer) {
     }
