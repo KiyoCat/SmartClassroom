@@ -89,12 +89,10 @@ public class SmartClassroomController extends ViewModel implements TemperatureOb
             try {
                 convertedScale = String.valueOf(heatingValue);
                 mqttClient.publish("heater", convertedScale);
-
             }catch (Exception e){
                 Log.d("error", "couldn't convert int to String");
             }
             return convertedScale;
-
         }
 
     public void rollosSwitchisClicked(boolean isClicked) {

@@ -2,6 +2,7 @@ package de.haw_hamburg.smartclassroom.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.R;
@@ -23,6 +26,8 @@ public class RoomActivity extends AppCompatActivity {
     Switch rollosSwitch;
     SmartClassroomController viewModel;
     TextView textView;
+    private MqttClient mqttClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,7 +35,15 @@ public class RoomActivity extends AppCompatActivity {
         setContentView(R.layout.room_activity);
 
         MyApplication myApp = (MyApplication) getApplication();
-        MqttClient mqttClient = myApp.getMqttHandler();
+        mqttClient = myApp.getMqttHandler();
+        try {
+            mqttClient.connect();
+            mqttClient.subscribe("heater");
+            mqttClient.subscribe("rollos");
+        } catch (MqttException e) {
+            e.printStackTrace();
+            Log.e("error", "couldn't connect in RoomActivity");
+        }
         // create ViewModel
 
          viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
