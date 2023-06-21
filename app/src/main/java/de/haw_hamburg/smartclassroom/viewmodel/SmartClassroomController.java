@@ -22,56 +22,45 @@ public class SmartClassroomController extends ViewModel implements TemperatureOb
     }
 
     private MqttClient mqttClient;
-
     private MutableLiveData<Integer> seekBarValue = new MutableLiveData<>(0);
-
-    public MutableLiveData<Integer> getSeekBarValue() {
-        return this.seekBarValue;
-    }
 
     public void setSeekBarValue(Integer seekBarValue) {
         this.seekBarValue.setValue(seekBarValue);
         sendHeaterValueToServer(seekBarValue);
     }
 
-    public SmartClassroomController() {
+    private MutableLiveData<Boolean> switchStateLiveData = new MutableLiveData<>();
 
+    public void setSwitchStateLiveData(Boolean switchState) {
+        this.switchStateLiveData.setValue(switchState);
+        sendSwitchStateToServer(switchState);
     }
-//    public SmartClassroomController(SmartClassroom smartClassroom, TemperatureSubscriber temperatureSubscriber, BrightnessSubscriber brightnessSubscriber){
-//        this.smartClassroom = smartClassroom;
-//        temperatureSubscriber.addObserver(this);
-//        brightnessSubscriber.addObserver(this);
 
-   // }
+    public SmartClassroomController() {
+    }
 
     @Override
     public void addObserver(MqttObserver observer) {
-
     }
 
     @Override
     public void subscribe(String channel) {
-
     }
 
     @Override
     public void connectionLost(Throwable cause) {
-
     }
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-
     }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-
     }
 
     @Override
     public void onMessageReceived(String topic, String message) {
-
     }
 
     @Override
@@ -95,11 +84,11 @@ public class SmartClassroomController extends ViewModel implements TemperatureOb
             return convertedScale;
         }
 
-    public void rollosSwitchisClicked(boolean isClicked) {
-        if(isClicked == true) {
-            mqttClient.publish("rollo", "Pull down rollos");
+    public void sendSwitchStateToServer(boolean switchState) {
+        if(switchState==true) {
+            mqttClient.publish("rollo", "Pull down");
         } else {
-            mqttClient.publish("rollo", "Pull up rollos");
+            mqttClient.publish("rollo", "Pull up");
         }
     }
 

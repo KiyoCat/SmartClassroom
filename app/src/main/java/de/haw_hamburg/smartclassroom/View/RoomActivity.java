@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,11 +24,10 @@ public class RoomActivity extends AppCompatActivity {
     //private RoomActivityBinding binding;
     ImageView imageView;
     SeekBar seekBar;
-    Switch rollosSwitch;
     SmartClassroomController viewModel;
     TextView textView;
     private MqttClient mqttClient;
-
+    Switch aSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -39,22 +39,16 @@ public class RoomActivity extends AppCompatActivity {
         try {
             mqttClient.connect();
             mqttClient.subscribe("heater");
-            mqttClient.subscribe("rollos");
+            mqttClient.subscribe("rollo");
         } catch (MqttException e) {
             e.printStackTrace();
             Log.e("error", "couldn't connect in RoomActivity");
         }
-        // create ViewModel
 
-         viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
-         viewModel.setMqttClient(mqttClient);
+        viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
+        viewModel.setMqttClient(mqttClient);
 
-         //rollosSwitch = (Switch) findViewById(R.id.rollosSwitch);
-
-        /*rollosSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            viewModel.rollosSwitchisClicked(isChecked);
-        });*/
-
+        aSwitch = (Switch) findViewById(R.id.switch2);
         seekBar = (SeekBar) findViewById(R.id.heating_seekbar);
         textView = (TextView) findViewById(R.id.heating_textview);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -81,8 +75,16 @@ public class RoomActivity extends AppCompatActivity {
                 openMainActivity();
             }
         });
+    }
 
-
+    public void turnOn(View view) {
+        if(aSwitch.isChecked()) {
+            Toast.makeText(getApplicationContext(), "ROLLOS DOWN", Toast.LENGTH_SHORT).show();
+            viewModel.setSwitchStateLiveData(true);
+        } else {
+            Toast.makeText(getApplicationContext(), "ROLLOS UP", Toast.LENGTH_SHORT).show();
+            viewModel.setSwitchStateLiveData(false);
+        }
     }
 
     @Override
