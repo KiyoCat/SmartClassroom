@@ -1,6 +1,7 @@
 package de.haw_hamburg.smartclassroom;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -27,8 +28,8 @@ public class SmartClassroomControllerTest {
 
     @Test
     public void testSendHeaterValueToServer() throws MqttException {
-        int heatingValue = 25;
-        String expectedMessage = "25";
+        int heatingValue = 3;
+        String expectedMessage = "3";
 
         controller.sendHeaterValueToServer(heatingValue);
 
