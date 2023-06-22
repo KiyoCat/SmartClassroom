@@ -8,12 +8,10 @@ import androidx.lifecycle.ViewModel;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import de.haw_hamburg.smartclassroom.Model.BrightnessObserver;
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
 import de.haw_hamburg.smartclassroom.Model.SmartClassroom;
-import de.haw_hamburg.smartclassroom.Model.TemperatureObserver;
 
-public class SmartClassroomController extends ViewModel implements TemperatureObserver, BrightnessObserver {
+public class SmartClassroomController extends ViewModel {
 
     private SmartClassroom smartClassroom;
 
@@ -41,40 +39,6 @@ public class SmartClassroomController extends ViewModel implements TemperatureOb
 
     public SmartClassroomController(SmartClassroom smartClassroom, MqttClient mqttclient) {
 
-    }
-
-    @Override
-    public void addObserver(MqttObserver observer) {
-    }
-
-    @Override
-    public void subscribe(String channel) {
-    }
-
-    @Override
-    public void connectionLost(Throwable cause) {
-    }
-
-    @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
-    }
-
-    @Override
-    public void deliveryComplete(IMqttDeliveryToken token) {
-    }
-
-    @Override
-    public void onMessageReceived(String topic, String message) {
-    }
-
-    @Override
-    public void onBrightnessChanged(double brightness) {
-        smartClassroom.setBrightness(brightness);
-    }
-
-    @Override
-    public void onTemperatureChanged(double temperature) {
-        smartClassroom.setTemperature(temperature);
     }
 
     public String sendHeaterValueToServer(int heatingValue) {
