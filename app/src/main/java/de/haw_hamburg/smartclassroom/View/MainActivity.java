@@ -1,6 +1,7 @@
 package de.haw_hamburg.smartclassroom.View;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -8,11 +9,11 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -27,23 +28,15 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.nio.charset.StandardCharsets;
 
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
-import de.haw_hamburg.smartclassroom.Model.SmartClassroom;
 import de.haw_hamburg.smartclassroom.R;
 import de.haw_hamburg.smartclassroom.viewmodel.MyApplication;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SmartClassroom smartClassroom;
-    Button button;
-    ImageView imageView;
-    TextView temperatureTextView;
-
-    TextView temperatureTextViewE62;
-    TextView temperatureTextViewE63;
-    TextView brightnessTextView;
-    TextView brightnessTextViewE62;
-    TextView brightnessTextViewE63;
-
+    private Button button;
+    private ImageView imageView;
+    private TextView temperatureTextView;
+    private TextView brightnessTextView;
     private MqttClient mqttClient;
 
     @Override
@@ -51,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MyApplication myApp = (MyApplication) getApplication();
-        mqttClient = myApp.getMqttHandler();
+        mqttSetUp();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("notif", "Notification", NotificationManager.IMPORTANCE_HIGH);
@@ -61,41 +53,9 @@ public class MainActivity extends AppCompatActivity {
             Log.d("test", "first build");
         }
 
-        try {
-            mqttClient.connect();
-            mqttClient.subscribe("temperature");
-            mqttClient.subscribe("brightness");
-        } catch (MqttException e) {
-            e.printStackTrace();
-            Log.e("error", "couldn't connect in MainActivity");
-        }
+        initializeViews();
+        setClickListeners();
 
-        button = (Button) findViewById(R.id.roomActivity_Button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openRoomActivity();
-            }
-        });
-
-        imageView = (ImageView) findViewById(R.id.newRoom_ImageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewRoomActivity();
-            }
-        });
-
-        temperatureTextView = (TextView) findViewById(R.id.temperatureCelsius_MaterialTextView);
-        temperatureTextViewE62 = (TextView) findViewById(R.id.temperatureCelsiusE62_MaterialTextView);
-        temperatureTextViewE63 = (TextView) findViewById(R.id.temperatureCelsiusE63_MaterialTextView);
-        brightnessTextView = (TextView) findViewById(R.id.lightPercentage_MaterialTextView);
-        brightnessTextViewE62 = (TextView) findViewById(R.id.lightPercentageE62_MaterialTextView);
-        brightnessTextViewE63 = (TextView) findViewById(R.id.lightPercentageE63_MaterialTextView);
-
-        // testing, ignore pls
-        mqttClient.subscribe("test");
-        mqttClient.publish("test", "hallo test");
     }
 
     @Override
@@ -107,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+            @SuppressLint("SetTextI18n")
             @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {
+            public void messageArrived(String topic, MqttMessage message) {
 
                 if (topic.equals("temperature")) {
                     String receivedMessage = new String(message.getPayload(), StandardCharsets.UTF_8);
@@ -121,25 +83,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            temperatureTextView.setText(receivedMessage + "°C");
-                            temperatureTextViewE62.setText(receivedMessage + "°C");
-                            temperatureTextViewE63.setText(receivedMessage + "°C");
-                        }
-                    });
+                    runOnUiThread(() -> temperatureTextView.setText(receivedMessage + "°C"));
                 } else if (topic.equals("brightness")) {
                     String receivedMessage = new String(message.getPayload(), StandardCharsets.UTF_8);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //probably still need to calculate the percentage, not sure how we receive it
-                            brightnessTextView.setText(receivedMessage + "%");
-                            brightnessTextViewE62.setText(receivedMessage + "%");
-                            brightnessTextViewE63.setText(receivedMessage + "%");
-                        }
-                    });
+                    runOnUiThread(() -> brightnessTextView.setText(receivedMessage + "%"));
 
                 }
 
@@ -194,8 +141,34 @@ public class MainActivity extends AppCompatActivity {
             }
 
             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
             managerCompat.notify(123, builder.build());
         }
     }
+    private void mqttSetUp(){
+        MyApplication myApp = (MyApplication) getApplication();
+        mqttClient = myApp.getMqttHandler();
+        try {
+            mqttClient.connect();
+            mqttClient.subscribe("temperature");
+            mqttClient.subscribe("brightness");
+        } catch (MqttException e) {
+            e.printStackTrace();
+            Log.e("error", "couldn't connect in MainActivity");
+        }
+    }
 
+    private void initializeViews(){
+        button = (Button) findViewById(R.id.roomActivity_Button);
+        imageView = (ImageView) findViewById(R.id.newRoom_ImageView);
+        temperatureTextView = (TextView) findViewById(R.id.temperatureCelsius_MaterialTextView);
+        brightnessTextView = (TextView) findViewById(R.id.lightPercentage_MaterialTextView);
+    }
+
+    private void setClickListeners(){
+        button.setOnClickListener(v -> openRoomActivity());
+        imageView.setOnClickListener(v -> openNewRoomActivity());
+    }
 }

@@ -5,15 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-
 import de.haw_hamburg.smartclassroom.Model.MqttClient;
-import de.haw_hamburg.smartclassroom.Model.SmartClassroom;
 
 public class SmartClassroomController extends ViewModel {
-
-    private SmartClassroom smartClassroom;
 
     public void setMqttClient(MqttClient mqttClient) {
         this.mqttClient = mqttClient;
@@ -32,13 +26,6 @@ public class SmartClassroomController extends ViewModel {
     public void setSwitchStateLiveData(Boolean switchState) {
         this.switchStateLiveData.setValue(switchState);
         sendSwitchStateToServer(switchState);
-    }
-
-    public SmartClassroomController() {
-    }
-
-    public SmartClassroomController(SmartClassroom smartClassroom, MqttClient mqttclient) {
-
     }
 
     public String sendHeaterValueToServer(int heatingValue) {

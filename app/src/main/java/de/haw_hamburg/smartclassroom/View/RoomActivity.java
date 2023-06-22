@@ -1,5 +1,6 @@
 package de.haw_hamburg.smartclassroom.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,35 +23,24 @@ import de.haw_hamburg.smartclassroom.viewmodel.SmartClassroomController;
 
 public class RoomActivity extends AppCompatActivity {
     //private RoomActivityBinding binding;
-    ImageView imageView;
-    SeekBar seekBar;
-    SmartClassroomController viewModel;
-    TextView textView;
+    private ImageView imageView;
+    private SeekBar seekBar;
+    private SmartClassroomController viewModel;
+    private TextView textView;
     private MqttClient mqttClient;
-    Switch aSwitch;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private Switch aSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_activity);
 
-        MyApplication myApp = (MyApplication) getApplication();
-        mqttClient = myApp.getMqttHandler();
-        try {
-            mqttClient.connect();
-            mqttClient.subscribe("heater");
-            mqttClient.subscribe("rollo");
-        } catch (MqttException e) {
-            e.printStackTrace();
-            Log.e("error", "couldn't connect in RoomActivity");
-        }
+        mqttSetup();
+        initializeViews();
 
         viewModel = new ViewModelProvider(this).get(SmartClassroomController.class);
         viewModel.setMqttClient(mqttClient);
-
-        aSwitch = (Switch) findViewById(R.id.switch2);
-        seekBar = (SeekBar) findViewById(R.id.heating_seekbar);
-        textView = (TextView) findViewById(R.id.heating_textview);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -69,13 +59,7 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
 
-        imageView = (ImageView) findViewById(R.id.imageView9);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMainActivity();
-            }
-        });
+        imageView.setOnClickListener(v -> openMainActivity());
     }
 
     public void turnOn(View view) {
@@ -105,4 +89,23 @@ public class RoomActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void mqttSetup(){
+        MyApplication myApp = (MyApplication) getApplication();
+        mqttClient = myApp.getMqttHandler();
+        try {
+            mqttClient.connect();
+            mqttClient.subscribe("heater");
+            mqttClient.subscribe("rollo");
+        } catch (MqttException e) {
+            e.printStackTrace();
+            Log.e("error", "couldn't connect in RoomActivity");
+        }
+    }
+
+    private void initializeViews(){
+        aSwitch = (Switch) findViewById(R.id.switch2);
+        seekBar = (SeekBar) findViewById(R.id.heating_seekbar);
+        textView = (TextView) findViewById(R.id.heating_textview);
+        imageView = (ImageView) findViewById(R.id.imageView9);
+    }
 }

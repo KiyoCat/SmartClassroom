@@ -73,7 +73,7 @@ public class MqttClient implements MqttCallback, IMqttMessageListener {
         }
     }
     @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
+    public void messageArrived(String topic, MqttMessage message) {
         try {
             byte[] payload = message.getPayload();
             String convertedMessageContent = new String(payload, StandardCharsets.UTF_8);

@@ -14,11 +14,6 @@ public class MyApplication extends Application {
     public void onCreate(){
         super.onCreate();
         mqttClient = new MqttClient();
-        try {
-            mqttClient.connect();
-        } catch (MqttException e) {
-            throw new RuntimeException(e);
-        }
     }
     public MqttClient getMqttHandler(){
         return mqttClient;

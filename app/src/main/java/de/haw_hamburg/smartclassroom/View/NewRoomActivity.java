@@ -11,7 +11,7 @@ import de.haw_hamburg.smartclassroom.R;
 import de.haw_hamburg.smartclassroom.View.MainActivity;
 
 public class NewRoomActivity extends AppCompatActivity {
-    ImageView imageView;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +19,12 @@ public class NewRoomActivity extends AppCompatActivity {
         setContentView(R.layout.newroom_activity);
 
         imageView = (ImageView) findViewById(R.id.imageView9);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMainActivity();
-            }
-        });
+        imageView.setOnClickListener(v -> openMainActivity());
     }
 
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
 }
