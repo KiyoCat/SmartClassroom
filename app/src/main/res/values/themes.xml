@@ -1,13 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.SmartClassroom" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
-
-    <style name="Theme.SmartClassroom" parent="Base.Theme.SmartClassroom" />
-    
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="Base.Theme.SmartClassroom" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/darkBlue</item>
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/transparent_image</item>
     </style>
